@@ -1,4 +1,5 @@
 #include <iostream>
+
 double perimetr(double a, double b) {
 		return 2 * (a + b);
 	}
@@ -9,4 +10,6 @@ int main() {
 	std::cout << "enter side b: "; std::cin >> b;
 
 	std::cout << "perimetr = " << perimetr(a, b) << std::endl;
+
+	return 0;
 }
