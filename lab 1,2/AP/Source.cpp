@@ -30,6 +30,7 @@ int main() {
 				}
 			}
 			delete[] arr;
+            break;
 		}
 	case 2: {
 
