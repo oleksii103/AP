@@ -1,44 +1,61 @@
 #include <iostream>
-#include <string>
-#include <sstream>
+#include <cstring>
 #include <map>
+#include <sstream>
 
 int main() {
     int a;
     std::cout << "chs task: ";
     std::cin >> a;
-    std::cin >> std::ws;
+    std::cin.ignore(); // очистка буфера
 
     switch (a) {
-    case 1:{
-            std::string text;
-            std::cout << "enter text: " << std::endl;
-            std::getline(std::cin, text);
 
-            if (text.find("vesna") == std::string::npos) {
-                std::cout << text;
-            }
-            else {
-                size_t pos = 0;
-                while ((pos = text.find("vesna", pos)) != std::string::npos) {
-                    text.replace(pos, 5, "zima");
-                    pos += 4;
-                }
-                std::cout << "text after replace: " << std::endl;
-                std::cout << text;
-            }
-            break;
+    case 1: {
+        char text[1000];
+        std::cout << "enter text:\n";
+        std::cin.getline(text, 1000);
+
+        if (strstr(text, "vesna") == nullptr) {
+            std::cout << text;
         }
+        else {
+            char result[1000] = "";
+            char* pos = text;
+
+            while (true) {
+                char* found = strstr(pos, "vesna");
+
+                if (found == nullptr) {
+                    strcat(result, pos);
+                    break;
+                }
+
+                strncat(result, pos, found - pos);
+
+                strcat(result, "zima");
+
+                pos = found + 5; 
+            }
+
+            std::cout << "text after replace:\n";
+            std::cout << result;
+        }
+        break;
+    }
+
     case 2: {
-        std::string text, word;
-        std::getline(std::cin, text);
+        char text[1000];
+        std::cout << "enter text:\n";
+        std::cin.getline(text, 1000);
 
         std::map<std::string, int> count;
 
-        std::stringstream ss(text);
+        char* word = strtok(text, " ");
 
-        while (ss >> word) {
+        while (word != nullptr) {
             count[word]++;
+            word = strtok(nullptr, " ");
         }
 
         std::cout << "words table:\n";
@@ -48,7 +65,11 @@ int main() {
         }
         break;
     }
-    default: std::cout << "nah you cnt do this" << std::endl; break;       
+
+    default:
+        std::cout << "nah you cnt do this\n";
+        break;
     }
+
     return 0;
 }
